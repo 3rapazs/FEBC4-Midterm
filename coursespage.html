@@ -1,0 +1,231 @@
+<!doctype html>
+<html lang="en">
+  <head>
+  	<title>Sidebar 07</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
+		
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+		<link rel="stylesheet" href="template/css/style.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+ 
+  </head>
+  <body>
+		
+		<div class="wrapper d-flex align-items-stretch">
+			<nav id="sidebar" class="active">
+				<h1><a href="index.html" class="logo">[L]</a></h1>
+        <ul class="list-unstyled components mb-5">
+          <div id="Menu"></div>
+        </ul>
+
+        <div class="footer">
+        	<p>
+					  <!-- Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="icon-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib.com</a> -->
+            <label id="lblFooter"></label>
+          </p>
+        </div>
+    	</nav>
+
+        <!-- Page Content  -->
+      <div id="content" class="p-4 p-md-5">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+          <div class="container-fluid">
+    
+            <button type="button" id="sidebarCollapse" class="btn btn-dark">
+              <i class="fa fa-bars"></i>
+              <span class="sr-only">Toggle Menu</span>
+            </button>
+            <button class="btn btn-dark d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <i class="fa fa-bars"></i>
+            </button>
+    
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+              <ul class="nav navbar-nav ml-auto">
+                <li class="nav-item">
+                  <div class="input-group mb-3">
+                    <div id="divSearch"></div>
+                    <div class="input-group-prepend">
+                      <span class="input-group-text" id="basic-addon1">ค้นหา</span>
+                    </div>
+                    <input type="text" class="form-control" placeholder="ค้นหา" id="txtSearch" aria-describedby="basic-addon1">
+                    <button class="btn btn-dark" onclick="ClickSearch()">ค้นหา</button>
+                  </div>
+              </li>
+                <li class="nav-item">
+              
+              </li>
+    
+              </ul>
+            </div>
+          </div>
+        </nav>
+        <!-- Start Content -->
+
+
+        <div class="container">
+            <h3>คอร์สเรียนทั้งหมด <label id="lblSearch"></label></h3>
+            <hr>
+            <div id="courses" class="row" >
+              <!-- <div class="col-md-4 col-sm-12" style="margin-bottom: 20px;">
+                <div class="card">
+                  <img src="/MidtermProject/images/sqr_arduino.png" class="img-coursespage" alt="...">
+                  <div class="card-body">
+                    <h5 class="card-title">Card title</h5> 
+                  </div>
+                  <ul class="list-group list-group-flush">
+                    <li class="list-group-item">1,900 </li> 
+                    <li class="list-group-item">เวลา 5.30 ชั่วโมง</li> 
+                    <li class="list-group-item"><a href="#" class="card-link">Card link</a></li>  
+                  </ul>
+                </div>
+                </div> -->
+            </div>
+            
+            <div class="row" >
+              <div class="col-md-4 col-sm-12">
+
+              </div>
+              <div class="col-md-4 col-sm-12" style="text-align:center;">
+                <button class="btn btn-dark" onclick="ClickMore()">เพิ่มเติม</button>
+              </div>
+              <div class="col-md-4 col-sm-12" style="text-align:right;">
+                [<label id="lblItemCount">5</label>/<label id="lblItemTotal">100</label>]
+              </div>
+
+            </div>
+            
+
+ 
+        <!-- End Content -->
+      </div>
+		</div>
+    <script src="template/js/jquery.min.js"></script>
+    <script src="template/js/popper.js"></script>
+    <script src="template/js/bootstrap.min.js"></script>
+    <script src="template/js/main.js"></script>
+    <script src="GlobalVariables.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+  </body>
+</html>
+
+<script>
+
+  let queryString = window.location.search;
+  let urlParams = new URLSearchParams(queryString);
+  let limit = TOP_ROWS;
+  let page = 1;
+  let search = urlParams.get('search')
+  let courseList = [];
+  GetData();
+  Initialize();
+   
+
+
+   
+   async function GetData()
+    {
+       fetch('../MidtermProject/asset/course.json')
+      .then(response => response.json())
+      .then(json => {
+        
+        courseList = json
+        LoadPage();
+      })
+    }
+
+    function LoadPage()
+    {
+    let courseResult = courseList;
+
+    if  (search !== null && search.length > 0)
+    {
+      //courseResult = courseList.filter( element => element.CourseName ==search || element.Timer ==search)
+
+      courseResult = [];
+      for (let i = 0; i < courseList.length; i++) {
+          if(courseList[i].CourseName.toLowerCase().includes(search.toLowerCase()))
+          {
+            courseResult.push(courseList[i]);
+          }
+      }
+
+
+      document.getElementById("lblSearch").innerText = " --> ["+search+"]";
+    }
+    let itemTotal = courseResult.length;
+      //courseList.find(el => el.CourseName === search);
+
+      let startIndex = (page - 1) * limit
+      let endIndex = page * limit
+      courseResult = courseResult.slice(startIndex, endIndex)
+
+      let itemCount = limit * page
+      if (itemCount > itemTotal)
+      {
+        itemCount = itemTotal;
+      }
+
+      document.getElementById("lblItemCount").innerText = itemCount;
+      document.getElementById("lblItemTotal").innerText = itemTotal;
+      RenderData(courseResult);
+    }
+
+
+    function RenderData(courseResult)
+    {
+      for (let i = 0; i < courseResult.length; i++) {
+
+
+        let status = "";
+
+      if(courseResult[i].status.length > 0)
+      {
+        switch(courseResult[i].status) {
+  case "new":
+  //status = "<h5><span class='badge badge-secondary'>New</span></h5>";
+    break;
+  case "hot":
+  //status = "";
+    break;
+  default:
+
+}
+      }
+      let timerText = "";
+      let timer = 0;
+      for (let j = 0; j < courseResult[i].Section.length; j++) {
+        timer += parseInt(courseResult[i].Section[j].SectionTimer)
+      }
+
+      //alert(timer)
+
+      timerText = `เวลา ${parseInt(timer/60)} ชั่วโมง ${parseInt(timer % 60)} นาที (${courseResult[i].Section.length} Section)`
+
+    document.getElementById("courses").innerHTML += `<div class="col-lg-4 col-md-6  col-sm-12" style="margin-bottom: 20px;">` + 
+                `<div class="card">` +
+                  `<img src="${courseResult[i].Image[0]}" class="img-coursespage" alt="...">` + 
+                  `<div class="card-body">` + 
+                    `<h5 class="card-title">${courseResult[i].CourseId}.${courseResult[i].CourseName}</h5>` + 
+                  `</div>` + 
+                  `<ul class="list-group list-group-flush">` + 
+                    // `<li class="list-group-item">${courseResult[i].PriceSale}</li>` + 
+                    `<li class="list-group-item"> ${timerText}</li>` + 
+                    `<li class="list-group-item"><a href="/MidtermProject/coursesdtlpage.html?id=${courseResult[i].CourseId}" class="card-link">เข้าเรียน</a> ${status}</li>` + 
+                  `</ul>` + 
+                `</div>` + 
+                `</div>`
+} 
+    }
+
+
+    function ClickMore()
+    {
+      page += 1;
+      LoadPage();
+    }
+
+
+</script>
