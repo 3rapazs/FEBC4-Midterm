@@ -127,7 +127,7 @@
    
    async function GetData()
     {
-       fetch('../MidtermProject/asset/course.json')
+       fetch('../asset/course.json')
       .then(response => response.json())
       .then(json => {
         
@@ -213,7 +213,7 @@
                   `<ul class="list-group list-group-flush">` + 
                     // `<li class="list-group-item">${courseResult[i].PriceSale}</li>` + 
                     `<li class="list-group-item"> ${timerText}</li>` + 
-                    `<li class="list-group-item"><a href="/MidtermProject/coursesdtlpage.html?id=${courseResult[i].CourseId}" class="card-link">เข้าเรียน</a> ${status}</li>` + 
+                    `<li class="list-group-item"><a href="/coursesdtlpage.html?id=${courseResult[i].CourseId}" class="card-link">เข้าเรียน</a> ${status}</li>` + 
                   `</ul>` + 
                 `</div>` + 
                 `</div>`

@@ -226,7 +226,7 @@
    
    async function GetData()
     {
-       fetch('../MidtermProject/asset/course.json')
+       fetch('../asset/course.json')
       .then(response => response.json())
       .then(json => {
 
@@ -285,7 +285,7 @@ if(e.key === "Enter")
                 <div class="container">
                   <div class="row align-items-start">
                     <div class="col-md-4 col-sm-12 text-center" >
-                      <img src="/MidtermProject/images/black.jpg" class="img-coursesdtlpage" alt="...">
+                      <img src="/images/black.jpg" class="img-coursesdtlpage" alt="...">
                     </div>
                     <div class="col-md-8 col-sm-12">
                         <p>${course.DescriptionImage[i]}</p>
